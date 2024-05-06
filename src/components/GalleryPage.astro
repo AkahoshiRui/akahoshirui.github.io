@@ -1,0 +1,30 @@
+---
+import { getPostUrlBySlug } from '@utils/url-utils'
+import GalleryCard from './GalleryCard.astro'
+
+const { page } = Astro.props
+
+// biome-ignore lint/style/useConst: <explanation>
+let delay = 0
+const interval = 50
+---
+
+<div class="transition grid grid-cols-2 md:grid-cols-3 gap-4 rounded-[var(--radius-large)] bg-[var(--card-bg)] py-0 bg-transparent mb-4">
+    {page.data.map((entry: { data: { draft: boolean; title: string; tags: string[]; category: string; published: Date; image: string; description: string; }; slug: string; }) => {
+        return (
+            <GalleryCard
+                    entry={entry}
+                    title={entry.data.title}
+                    tags={entry.data.tags}
+                    category={entry.data.category}
+                    published={entry.data.published}
+                    url={getPostUrlBySlug(entry.slug)}
+                    image={entry.data.image}
+                    description={entry.data.description}
+                    draft={entry.data.draft}
+                    class:list="onload-animation"
+                    style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
+            ></GalleryCard>
+        );
+    })}
+</div>

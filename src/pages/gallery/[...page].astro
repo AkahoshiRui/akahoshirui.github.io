@@ -1,0 +1,29 @@
+---
+import GalleryPage from '../../components/GalleryPage.astro'
+import PostCard from '../../components/PostCard.astro'
+import Pagination from '../../components/control/Pagination.astro'
+import { ARTWORK } from '../../config'
+import { GALLERY_PAGE_SIZE } from '../../constants/constants'
+import I18nKey from '../../i18n/i18nKey'
+import { i18n } from '../../i18n/translation'
+import MainGridLayout from '../../layouts/MainGridLayout.astro'
+import { getSortedPosts } from '../../utils/content-utils'
+import { getPostUrlBySlug } from '../../utils/url-utils'
+
+export async function getStaticPaths({ paginate }) {
+  let allBlogPosts = await getSortedPosts()
+  allBlogPosts = allBlogPosts.filter(
+    post => post.data.category && ARTWORK.includes(post.data.category),
+  )
+  return paginate(allBlogPosts, { pageSize: GALLERY_PAGE_SIZE })
+}
+
+const { page } = Astro.props
+
+const len = page.data.length
+---
+
+<MainGridLayout title={i18n(I18nKey.gallery)} description={i18n(I18nKey.gallery)}>
+    <GalleryPage page={page}></GalleryPage>
+    <Pagination class="mx-auto onload-animation" page={page} style=`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`></Pagination>
+</MainGridLayout>

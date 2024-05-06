@@ -1,0 +1,32 @@
+---
+import MainGridLayout from "../../layouts/MainGridLayout.astro";
+import PostCard from "../../components/PostCard.astro";
+import Pagination from "../../components/control/Pagination.astro";
+import {getSortedPosts} from "../../utils/content-utils";
+import {getPostUrlBySlug} from "../../utils/url-utils";
+import {PAGE_SIZE} from "../../constants/constants";
+import I18nKey from '../../i18n/i18nKey'
+import { i18n } from '../../i18n/translation'
+import PostPage from "../../components/PostPage.astro";
+import { ARTWORK } from '@/config'
+
+export async function getStaticPaths({ paginate }) {
+    let allBlogPosts = await getSortedPosts();
+  allBlogPosts = allBlogPosts.filter(
+    post =>
+      (post.data.category && !ARTWORK.includes(post.data.category)) ||
+      !post.data.category,
+  )
+    return paginate(allBlogPosts, { pageSize: PAGE_SIZE });
+}
+
+const {page} = Astro.props;
+
+const len = page.data.length;
+
+---
+
+<MainGridLayout title={i18n(I18nKey.blogs)} description={i18n(I18nKey.blogs)}>
+    <PostPage page={page}></PostPage>
+    <Pagination class="mx-auto onload-animation" page={page} style=`animation-delay: calc(var(--content-delay) + ${(len)*50}ms)`></Pagination>
+</MainGridLayout>

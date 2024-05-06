@@ -4,9 +4,8 @@ published: 2023-10-01
 description: A simple example of a Markdown blog post.
 tags: [Markdown, Blogging, Demo]
 category: Examples
-draft: false
+draft: true
 ---
-
 # An h1 header
 
 Paragraphs are separated by a blank line.
@@ -72,24 +71,22 @@ Now a nested list:
 
 1. First, get these ingredients:
 
-    - carrots
-    - celery
-    - lentils
-
+   - carrots
+   - celery
+   - lentils
 2. Boil some water.
-
 3. Dump everything in the pot and follow
-    this algorithm:
+   this algorithm:
 
-        find wooden spoon
-        uncover pot
-        stir
-        cover pot
-        balance wooden spoon precariously on pot handle
-        wait 10 minutes
-        goto first step (or shut off burner when done)
+   find wooden spoon
+   uncover pot
+   stir
+   cover pot
+   balance wooden spoon precariously on pot handle
+   wait 10 minutes
+   goto first step (or shut off burner when done)
 
-    Do not bump wooden spoon or it will fall.
+   Do not bump wooden spoon or it will fall.
 
 Notice again how text always lines up on 4-space indents (including
 that last line which continues item 3 above).
@@ -99,7 +96,7 @@ doc](local-doc.html), and to a [section heading in the current
 doc](#an-h2-header). Here's a footnote [^1].
 
 [^1]: Footnote text goes here.
-
+    
 Tables can look like this:
 
 size material color
@@ -155,12 +152,13 @@ Here's a "line block":
 
 and images can be specified like so:
 
-[//]: # (![example image]&#40;./demo-banner.png "An exemplary image"&#41;)
-
+[//]: #
 Inline math equations go in like so: $\omega = d\phi / dt$. Display
 math should get its own line and be put in in double-dollarsigns:
 
-$$I = \int \rho R^{2} dV$$
+$$
+I = \int \rho R^{2} dV
+$$
 
 And note that you can backslash-escape any punctuation characters
 which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.

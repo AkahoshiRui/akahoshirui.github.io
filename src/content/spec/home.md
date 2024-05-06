@@ -1,4 +1,4 @@
-# About  关于
+# 欢迎来到芮的小屋
 
 This is Akaboshi Rui' s personal website. I will post some arts and reflections here.
 
