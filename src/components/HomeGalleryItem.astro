@@ -1,0 +1,55 @@
+---
+import path from 'path'
+import { formatDateToYYYYMMDD } from '@utils/date-utils'
+import { Icon } from 'astro-icon/components'
+import I18nKey from '../i18n/i18nKey'
+import { i18n } from '../i18n/translation'
+import { getDir } from '../utils/url-utils'
+import PostMetadata from './PostMeta.astro'
+import ImageWrapper from './misc/ImageWrapper.astro'
+
+interface Props {
+  class: string
+  entry: any
+  title: string
+  url: string
+  published: Date
+  tags: string[]
+  category: string
+  image: string
+  description: string
+  words: number
+  draft: boolean
+  style: string
+}
+const {
+  entry,
+  title,
+  url,
+  published,
+  tags,
+  category,
+  image,
+  description,
+  words,
+  style,
+} = Astro.props
+const className = Astro.props.class
+---
+<div class:list={[" w-full ] overflow-hidden relative p-2", className]} style={style}>
+  <a href={url} aria-label={title}
+                    class:list={["group",
+                        "max-h-64",
+                        "w-full relative rounded-xl overflow-hidden"
+                    ]} >
+        <div class="absolute pointer-events-none z-10 w-full h-full bg-black/[.02] group-hover:bg-white/30 group-active:bg-white/50 transition rounded-xl"></div>
+        <ImageWrapper src={image} basePath={path.join("content/posts/", getDir(entry.id))} alt="Artwork"
+                  class="w-full aspect-square mb-2 rounded-xl">
+        </ImageWrapper>
+    </a>
+    
+    <div class="text-black/80 dark:text-white/80 font-bold">
+      <a href={url} aria-label={title}>{title}</a>
+    </div>
+      <div class="text-50 text-sm font-medium">{formatDateToYYYYMMDD(published)}</div>
+</div>

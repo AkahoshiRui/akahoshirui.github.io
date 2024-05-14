@@ -1,0 +1,43 @@
+---
+import {getPostUrlBySlug} from "@utils/url-utils";
+import HomePostItem from "./HomePostItem.astro";
+import I18nKey from "@i18n/i18nKey";
+import { Icon } from "astro-icon/components";
+import { i18n } from "@i18n/translation";
+
+const {page} = Astro.props;
+
+let delay = 0
+const interval = 50
+---
+<div class="card-base transition rounded-[var(--radius-large)]">
+    <div class="pl-6 md:pl-9 pr-6 md:pr-2 pt-6 md:pt-7 pb-4 relative">
+    <a href="/blog/"
+           class="transition w-full block font-bold mb-3 text-3xl text-90
+        hover:text-[var(--primary)] dark:hover:text-[var(--primary)]
+        active:text-[var(--title-active)] dark:active:text-[var(--title-active)]
+        before:w-1 before:h-5 before:rounded-md before:bg-[var(--primary)]
+        before:absolute before:top-[35px] before:left-[18px] before:hidden md:before:block
+        ">
+        {i18n(I18nKey.blogs)}<Icon class="inline text-[var(--primary)] md:hidden -translate-y-[0.15rem]" name="material-symbols:chevron-right-rounded" size={28} ></Icon>
+        </a>
+    </div>
+<div class="transition flex flex-col bg-[var(--card-bg)] py-1 md:py-0 bg-transparent md:gap-4">
+    {page.map((entry: { data: { draft: boolean; title: string; tags: string[]; category: string; published: Date; image: string; description: string; }; slug: string; }) => {
+        return (
+            <HomePostItem
+                    entry={entry}
+                    title={entry.data.title}
+                    tags={entry.data.tags}
+                    category={entry.data.category}
+                    published={entry.data.published}
+                    url={getPostUrlBySlug(entry.slug)}
+                    image={entry.data.image}
+                    description={entry.data.description}
+                    draft={entry.data.draft}
+                    class:list="onload-animation"
+                    style={`animation-delay: calc(var(--content-delay) + ${delay++ * interval}ms);`}
+            ></HomePostItem>
+        );
+    })}
+</div></div>
